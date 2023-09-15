@@ -1,3 +1,3 @@
-# express-ts-template
+# simple-crud-express
 
-A template of a backend application with Expressjs, Typescript and Nodemon included.
+An example of a simple rest api, made with Express.

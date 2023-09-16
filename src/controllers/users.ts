@@ -42,8 +42,14 @@ export const usersController = {
         const id = req.params.id;
         const { nombre, correo }: UsersBody = req.body;
 
-        users.update(id, nombre, correo).then(() => {
-            res.json({ message: 'Usuario actualizado' });
+        users.getById(id).then((data: Users) => {
+            if (!data) return res.status(404).json({ message: 'Usuario no encontrado' });
+
+            users.update(id, nombre, correo).then(() => {
+                res.json({ message: 'Usuario actualizado' });
+            }).catch((error: Error) => {
+                res.status(500).json({ error: error.message });
+            });
         }).catch((error: Error) => {
             res.status(500).json({ error: error.message });
         });
@@ -51,8 +57,14 @@ export const usersController = {
     delete: (req: Request, res: Response) => {
         const id = req.params.id;
 
-        users.delete(id).then(() => {
-            res.json({ message: 'Usuario eliminado' });
+        users.getById(id).then((data: Users) => {
+            if (!data) return res.status(404).json({ message: 'Usuario no encontrado' });
+
+            users.delete(id).then(() => {
+                res.json({ message: 'Usuario eliminado' });
+            }).catch((error: Error) => {
+                res.status(500).json({ error: error.message });
+            });
         }).catch((error: Error) => {
             res.status(500).json({ error: error.message });
         });
